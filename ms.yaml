@@ -1,0 +1,21 @@
+apiVersion: stork.libopenstorage.org/v1alpha1
+kind: MigrationSchedule
+metadata:
+  name: migrationschedule
+  namespace: kube-system
+  annotations:
+    # Add the below annotations when PX-Security is enabled on both the clusters
+    #openstorage.io/auth-secret-namespace: <the namespace where the kubernetes secret holding the auth token resides>
+    #openstorage.io/auth-secret-name: <the name of the kubernetes secret which holds the auth token>
+spec:
+  template:
+    spec:
+      clusterPair: replication-cluster-pair
+      includeResources: true #Replicate K8s Objects
+      startApplications: false #Won't scale up pod replicas
+      includeVolumes: true #Replicate volumes
+      namespaces:
+      - postgres
+  schedulePolicyName: every-30-mins #The recent step
+  suspend: false #Won't stop after first replication try
+  autoSuspend: true #Stop replication if bound and scaling actions happened on destination cluster
