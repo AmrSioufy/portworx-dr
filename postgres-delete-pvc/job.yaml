@@ -1,0 +1,27 @@
+kind: Job
+apiVersion: batch/v1
+metadata:
+  name: delete-pvc-failback
+  namespace: kube-system
+  labels:
+    app: delete-pvc-failback
+spec:
+  backoffLimit: 0
+  template:
+    metadata:
+      labels:
+        app: delete-pvc-failback
+    spec:
+      containers:
+        - name: backup
+          image: "registry.redhat.io/openshift4/ose-cli"
+          command:
+            - "/bin/bash"
+            - "-c"
+            - oc delete pvc --all -n postgres
+      restartPolicy: "Never"
+      terminationGracePeriodSeconds: 30
+      activeDeadlineSeconds: 500
+      dnsPolicy: "ClusterFirst"
+      serviceAccountName: "pxbackup-sa"
+      serviceAccount: "pxbackup-sa"
