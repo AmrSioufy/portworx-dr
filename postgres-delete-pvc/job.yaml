@@ -13,12 +13,12 @@ spec:
         app: delete-pvc-failback
     spec:
       containers:
-        - name: backup
-          image: "registry.redhat.io/openshift4/ose-cli"
+        - name: deletepvc
+          image: "redhat-regisry.fed.local:8443/ose-cli"
           command:
             - "/bin/bash"
             - "-c"
-            - oc delete pvc --all -n postgres
+            - "oc delete pvc --all -n postgres"
       restartPolicy: "Never"
       terminationGracePeriodSeconds: 30
       activeDeadlineSeconds: 500
