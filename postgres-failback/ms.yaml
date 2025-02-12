@@ -14,7 +14,7 @@ spec:
       includeResources: true #Replicate K8s Objects
       startApplications: false #Won't scale up pod replicas
       includeVolumes: true #Replicate volumes
-      ignoreOwnerReferencesCheck: true
+      preExecRule: oc delete pvc --all -n postgres
       namespaces:
       - postgres
   schedulePolicyName: every-30-mins #The recent step
