@@ -18,7 +18,7 @@ spec:
           command:
             - "/bin/bash"
             - "-c"
-            - "oc delete pvc --all -n postgres"
+            - "oc delete pvc --all -n postgres & oc get pvc -n postgres -o jsonpath='{.items[*].metadata.name}' | xargs -I {} oc patch pvc {} -n postgres --type=merge -p '{"metadata":{"finalizers":null}}'"
       restartPolicy: "Never"
       terminationGracePeriodSeconds: 30
       activeDeadlineSeconds: 500
