@@ -1,7 +1,7 @@
 apiVersion: stork.libopenstorage.org/v1alpha1
 kind: MigrationSchedule
 metadata:
-  name: migrationschedule-postgres-failover
+  name: migrationschedule-postgres-failover-no-test
   namespace: kube-system
 spec:
   template:
@@ -11,7 +11,7 @@ spec:
       startApplications: false #Won't scale up pod replicas
       includeVolumes: true #Replicate volumes
       namespaces:
-      - test
+      - postgres
   schedulePolicyName: every-15-mins #The recent step
   suspend: false #Won't stop after first replication try
   autoSuspend: true #Stop replication if bound and scaling actions happened on destination cluster
